@@ -1,5 +1,12 @@
 #!/bin/bash
 export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+#Disable China
+wget http://iscn.kirito.moe/run.sh
+. ./run.sh
+if [[ $area == cn ]];then
+echo "Unable to install in china"
+exit
+fi
 #Check Root
 [ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
 #Check OS
@@ -57,10 +64,9 @@ if [[ ${OS} == Debian ]];then
 fi
 
 #Install SSR and SSR-Bash
-mkdir /usr/local/SSR-Bash-Python
-cp -r * /usr/local/SSR-Bash-Python/
 cd /usr/local
 git clone https://github.com/shadowsocksr/shadowsocksr.git
+git clone https://github.com/aihoom/SSR.git
 cd /usr/local/shadowsocksr
 bash initcfg.sh
 
@@ -139,7 +145,7 @@ systemctl enable iptables.service
 fi
 
 #Install SSR-Bash Background
-cp /usr/local/SSR-Bash-Python/ssr /usr/local/bin/ssr
+wget -N --no-check-certificate -O /usr/local/bin/ssr https://github.com/aihoom/SSR/blob/master/ssr
 chmod +x /usr/local/bin/ssr
 
 #Modify ShadowsocksR API
@@ -149,11 +155,5 @@ sed -i "s/SERVER_PUB_ADDR = '127.0.0.1'/SERVER_PUB_ADDR = '$(wget -qO- -t1 -T2 i
 #INstall Success
 bash /usr/local/SSR-Bash-Python/self-check.sh
 echo '安装完成！输入 ssr 即可使用本程序~'
-echo 'Telegram Group: https://t.me/functionclub'
-echo 'Google Puls: https://plus.google.com/communities/113154644036958487268'
-echo 'Github: https://github.com/FunctionClub'
-echo 'QQ Group:277717865'
-echo 'Function Club 无限期停更说明'
-echo 'https://www.ixh.me/2017/05/function-club-stop/'
-echo 'For legal reason, this packet will not receive update'
-echo 'Goodbye, user'
+echo '欢迎访问主站：www.aihoom.com'
+
